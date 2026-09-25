@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="stage_new" model="helpdesk.stage">
+        <field name="name">New</field>
+        <field name="sequence">1</field>
+        <field name="is_starting_stage">True</field>
+        <field name="fold">False</field>
+    </record>
+
+    <record id="stage_in_progress" model="helpdesk.stage">
+        <field name="name">In Progress</field>
+        <field name="sequence">10</field>
+        <field name="fold">False</field>
+    </record>
+
+    <record id="stage_waiting_customer" model="helpdesk.stage">
+        <field name="name">Waiting for Customer</field>
+        <field name="sequence">20</field>
+        <field name="fold">True</field>
+    </record>
+
+    <record id="stage_resolved" model="helpdesk.stage">
+        <field name="name">Resolved</field>
+        <field name="sequence">30</field>
+        <field name="is_closing_stage">True</field>
+        <field name="fold">True</field>
+    </record>
+
+    <record id="stage_closed" model="helpdesk.stage">
+        <field name="name">Closed</field>
+        <field name="sequence">40</field>
+        <field name="is_closing_stage">True</field>
+        <field name="fold">True</field>
+    </record>
+
+    <record id="email_template_helpdesk_csat" model="mail.template">
+        <field name="name">Helpdesk CSAT Survey</field>
+        <field name="model_id" ref="model_helpdesk_ticket"/>
+        <field name="subject">How satisfied were you with our support for ${object.name}?</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0; padding: 0; background-color: #f4f5f6; font-family: Arial, sans-serif;">
+                <div style="max-width: 640px; margin: 24px auto; background-color: #ffffff; border-radius: 6px; padding: 24px; border: 1px solid #e5e7eb;">
+                    <h2 style="margin-top: 0;">Ticket Feedback</h2>
+                    <p>Dear <t t-out="object.partner_id.name or 'Customer'"/>,</p>
+                    <p>Thank you for contacting our IT support team for ticket <strong><t t-out="object.name"/></strong>.</p>
+                    <p>Please rate your satisfaction with our service and share any comments.</p>
+                    <p>Best regards,<br/>IT Helpdesk Team</p>
+                </div>
+            </div>
+        </field>
+        <field name="email_from">{{ user.email_formatted }}</field>
+        <field name="email_to">{{ object.partner_id.email }}</field>
+        <field name="partner_to">{{ object.partner_id.id }}</field>
+        <field name="auto_delete" eval="False"/>
+    </record>
+</odoo>

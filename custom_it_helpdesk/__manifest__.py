@@ -1,0 +1,23 @@
+{
+    'name': 'IT Helpdesk & Ticketing System Custom',
+    'version': '19.0.1.0.0',
+    'category': 'Services/IT Helpdesk',
+    'summary': 'Custom IT helpdesk and ticketing system for Odoo 19',
+    'license': 'LGPL-3',
+    'depends': ['base', 'mail', 'resource', 'portal', 'maintenance', 'hr_timesheet'],
+    'data': [
+        'security/security_groups.xml',
+        'security/ir.model.access.csv',
+        'data/ir_sequence_data.xml',
+        'data/helpdesk_stage_data.xml',
+        'views/helpdesk_stage_views.xml',
+        'views/helpdesk_category_views.xml',
+        'views/helpdesk_sla_views.xml',
+        'views/helpdesk_ticket_views.xml',
+        'views/menus.xml',
+        'wizard/ticket_reassign_wizard_views.xml',
+    ],
+    'application': True,
+    'installable': True,
+    'auto_install': False,
+}

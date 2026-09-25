@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_helpdesk_ticket_user,helpdesk.ticket user,model_helpdesk_ticket,group_helpdesk_user,1,1,1,0
+access_helpdesk_ticket_technician,helpdesk.ticket technician,model_helpdesk_ticket,group_helpdesk_technician,1,1,1,0
+access_helpdesk_ticket_manager,helpdesk.ticket manager,model_helpdesk_ticket,group_helpdesk_manager,1,1,1,1
+access_helpdesk_stage_user,helpdesk.stage user,model_helpdesk_stage,group_helpdesk_user,1,0,0,0
+access_helpdesk_stage_technician,helpdesk.stage technician,model_helpdesk_stage,group_helpdesk_technician,1,1,1,0
+access_helpdesk_stage_manager,helpdesk.stage manager,model_helpdesk_stage,group_helpdesk_manager,1,1,1,1
+access_helpdesk_category_user,helpdesk.category user,model_helpdesk_category,group_helpdesk_user,1,0,0,0
+access_helpdesk_category_technician,helpdesk.category technician,model_helpdesk_category,group_helpdesk_technician,1,1,0,0
+access_helpdesk_category_manager,helpdesk.category manager,model_helpdesk_category,group_helpdesk_manager,1,1,1,1
+access_helpdesk_sla_user,helpdesk.sla user,model_helpdesk_sla,group_helpdesk_user,1,0,0,0
+access_helpdesk_sla_technician,helpdesk.sla technician,model_helpdesk_sla,group_helpdesk_technician,1,1,0,0
+access_helpdesk_sla_manager,helpdesk.sla manager,model_helpdesk_sla,group_helpdesk_manager,1,1,1,1
+access_ticket_reassign_wizard_user,ticket.reassign.wizard user,model_ticket_reassign_wizard,group_helpdesk_technician,1,1,1,0
+access_ticket_reassign_wizard_manager,ticket.reassign.wizard manager,model_ticket_reassign_wizard,group_helpdesk_manager,1,1,1,1

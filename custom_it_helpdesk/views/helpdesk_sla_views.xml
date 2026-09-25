@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_helpdesk_sla_tree" model="ir.ui.view">
+        <field name="name">helpdesk.sla.tree</field>
+        <field name="model">helpdesk.sla</field>
+        <field name="arch" type="xml">
+            <tree string="SLA Policies">
+                <field name="name"/>
+                <field name="category_id"/>
+                <field name="priority"/>
+                <field name="response_time_hours"/>
+                <field name="resolution_time_hours"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_helpdesk_sla_form" model="ir.ui.view">
+        <field name="name">helpdesk.sla.form</field>
+        <field name="model">helpdesk.sla</field>
+        <field name="arch" type="xml">
+            <form string="SLA Policy">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="category_id"/>
+                            <field name="priority"/>
+                        </group>
+                        <group>
+                            <field name="response_time_hours"/>
+                            <field name="resolution_time_hours"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_helpdesk_sla" model="ir.actions.act_window">
+        <field name="name">SLA Policies</field>
+        <field name="res_model">helpdesk.sla</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
