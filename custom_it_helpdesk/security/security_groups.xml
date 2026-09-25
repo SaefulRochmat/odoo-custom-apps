@@ -7,20 +7,17 @@
 
     <record id="group_helpdesk_user" model="res.groups">
         <field name="name">Helpdesk User</field>
-        <field name="category_id" ref="module_category_helpdesk"/>
         <field name="comment">User can submit and view their own tickets.</field>
     </record>
 
     <record id="group_helpdesk_technician" model="res.groups">
         <field name="name">Helpdesk Technician</field>
-        <field name="category_id" ref="module_category_helpdesk"/>
         <field name="implied_ids" eval="[(4, ref('group_helpdesk_user'))]"/>
         <field name="comment">Technician can work assigned tickets, change stages, and log time.</field>
     </record>
 
     <record id="group_helpdesk_manager" model="res.groups">
         <field name="name">Helpdesk Manager</field>
-        <field name="category_id" ref="module_category_helpdesk"/>
         <field name="implied_ids" eval="[(4, ref('group_helpdesk_technician'))]"/>
         <field name="comment">Manager has full access to configurations and service performance.</field>
     </record>
