@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_helpdesk_category_tree" model="ir.ui.view">
-        <field name="name">helpdesk.category.tree</field>
+        <field name="name">helpdesk.category.list</field>
         <field name="model">helpdesk.category</field>
         <field name="arch" type="xml">
-            <tree string="Helpdesk Categories">
+            <list string="Helpdesk Categories">
                 <field name="code"/>
                 <field name="name"/>
                 <field name="default_technician_id"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -35,6 +35,6 @@
     <record id="action_helpdesk_category" model="ir.actions.act_window">
         <field name="name">Categories</field>
         <field name="res_model">helpdesk.category</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 </odoo>

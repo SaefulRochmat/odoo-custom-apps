@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <record id="view_helpdesk_ticket_tree" model="ir.ui.view">
-        <field name="name">helpdesk.ticket.tree</field>
+        <field name="name">helpdesk.ticket.list</field>
         <field name="model">helpdesk.ticket</field>
         <field name="arch" type="xml">
-            <tree string="Tickets" decoration-warning="priority == '1'" decoration-danger="priority == '3'" decoration-success="stage_id.is_closing_stage">
+            <list string="Tickets" decoration-warning="priority == '1'" decoration-danger="priority == '3'" decoration-success="stage_id.is_closing_stage">
                 <field name="name"/>
                 <field name="title"/>
                 <field name="partner_id"/>
@@ -14,7 +14,7 @@
                 <field name="user_id"/>
                 <field name="sla_deadline"/>
                 <field name="sla_reached"/>
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -170,7 +170,7 @@
     <record id="action_helpdesk_ticket" model="ir.actions.act_window">
         <field name="name">Tickets</field>
         <field name="res_model">helpdesk.ticket</field>
-        <field name="view_mode">kanban,tree,form,pivot,graph</field>
+        <field name="view_mode">kanban,list,form,pivot,graph</field>
         <field name="context">{'search_default_my_tickets': 1}</field>
     </record>
 </odoo>
