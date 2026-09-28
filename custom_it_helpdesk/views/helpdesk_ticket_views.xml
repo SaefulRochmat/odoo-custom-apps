@@ -22,7 +22,7 @@
         <field name="name">helpdesk.ticket.search</field>
         <field name="model">helpdesk.ticket</field>
         <field name="arch" type="xml">
-            <search string="Search Tickets">
+            <search>
                 <field name="name"/>
                 <field name="title"/>
                 <field name="partner_id"/>
@@ -32,7 +32,7 @@
                 <filter name="my_tickets" string="My Tickets" domain="[('user_id', '=', uid)]"/>
                 <separator/>
                 <filter name="unassigned" string="Unassigned" domain="[('user_id', '=', False)]"/>
-                <group expand="1" string="Group By">
+                <group>
                     <filter name="group_stage" string="Stage" context="{'group_by': 'stage_id'}"/>
                     <filter name="group_category" string="Category" context="{'group_by': 'category_id'}"/>
                     <filter name="group_user" string="Assigned Technician" context="{'group_by': 'user_id'}"/>
