@@ -78,8 +78,8 @@
                         <page string="Description">
                             <field name="description" widget="html"/>
                         </page>
-                        <page string="Timesheets">
-                            <field name="timesheet_ids" context="{'default_ticket_id': active_id}"/>
+                        <page string="Timesheets" groups="custom_it_helpdesk.group_helpdesk_technician">
+                            <field name="timesheet_ids"/>
                         </page>
                         <page string="Customer Feedback">
                             <group>
