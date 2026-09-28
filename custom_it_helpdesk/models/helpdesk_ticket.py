@@ -47,7 +47,12 @@ class HelpdeskTicket(models.Model):
     equipment_id = fields.Many2one('maintenance.equipment', string='Equipment')
     sla_id = fields.Many2one('helpdesk.sla', string='SLA Policy')
     sla_deadline = fields.Datetime(string='SLA Deadline')
-    sla_reached = fields.Boolean(string='Within SLA', default=False, tracking=True)
+    sla_reached = fields.Boolean(
+        string='Resolved Within SLA',
+        compute='_compute_sla_reached',
+        store=True,
+        tracking=True,
+    )
     close_date = fields.Datetime(string='Close Date')
     csat_rating = fields.Selection(
         [
@@ -75,18 +80,24 @@ class HelpdeskTicket(models.Model):
         return self.env['helpdesk.stage'].search([('is_starting_stage', '=', True)], limit=1)
 
     @api.model
-    def _read_group_stage_ids(self, stages, domain, order):
-        stage_ids = self.env['helpdesk.stage'].search([], order=order)
-        return stage_ids, None
+    def _read_group_stage_ids(self, stages, domain):
+        return self.env['helpdesk.stage'].search([], order='sequence, id')
 
-    @api.model
-    def create(self, vals):
-        if vals.get('name', 'New') == 'New':
-            sequence = self.env['ir.sequence'].search([('code', '=', 'helpdesk.ticket')], limit=1)
-            if not sequence:
-                raise UserError(_('Missing Helpdesk ticket sequence. Please configure ir.sequence for code: helpdesk.ticket.'))
-            vals['name'] = sequence.next_by_id() or sequence._next()
-        return super().create(vals)
+    @api.model_create_multi
+    def create(self, vals_list):
+        sequence = self.env['ir.sequence'].search(
+            [('code', '=', 'helpdesk.ticket')],
+            limit=1,
+        )
+        for vals in vals_list:
+            if vals.get('name', 'New') == 'New':
+                if not sequence:
+                    raise UserError(_(
+                        'Missing Helpdesk ticket sequence. '
+                        'Please configure ir.sequence for code: helpdesk.ticket.'
+                    ))
+                vals['name'] = sequence.next_by_id()
+        return super().create(vals_list)
 
     @api.onchange('category_id', 'priority')
     def _onchange_category_priority(self):
@@ -109,10 +120,8 @@ class HelpdeskTicket(models.Model):
             response_hours = float(sla.response_time_hours or 0)
             resolution_hours = float(sla.resolution_time_hours or 0)
             self.sla_deadline = now + timedelta(hours=resolution_hours)
-            self.sla_reached = False
         else:
             self.sla_deadline = False
-            self.sla_reached = False
 
     def action_assign_to_me(self):
         self.ensure_one()
@@ -131,18 +140,14 @@ class HelpdeskTicket(models.Model):
         template.send_mail(self.id, force_send=True)
         return True
 
-    def _compute_sla_status(self):
-        for record in self:
-            if record.sla_deadline and record.close_date:
-                record.sla_reached = record.close_date <= record.sla_deadline
-            elif record.sla_deadline and not record.close_date:
-                record.sla_reached = fields.Datetime.now() <= record.sla_deadline
-            else:
-                record.sla_reached = False
-
     @api.depends('close_date', 'sla_deadline')
     def _compute_sla_reached(self):
-        self._compute_sla_status()
+        for record in self:
+            record.sla_reached = bool(
+                record.close_date
+                and record.sla_deadline
+                and record.close_date <= record.sla_deadline
+            )
 
     def write(self, vals):
         # Standard closure logic: automatically fill close_date once stage is a closing stage.

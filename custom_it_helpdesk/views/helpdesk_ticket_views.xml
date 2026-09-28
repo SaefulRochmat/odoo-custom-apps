@@ -4,7 +4,7 @@
         <field name="name">helpdesk.ticket.list</field>
         <field name="model">helpdesk.ticket</field>
         <field name="arch" type="xml">
-            <list string="Tickets" decoration-warning="priority == '1'" decoration-danger="priority == '3'" decoration-success="stage_id.is_closing_stage">
+            <list string="Tickets" decoration-warning="priority == '1'" decoration-danger="priority == '3'">
                 <field name="name"/>
                 <field name="title"/>
                 <field name="partner_id"/>
@@ -101,7 +101,7 @@
         <field name="name">helpdesk.ticket.kanban</field>
         <field name="model">helpdesk.ticket</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="stage_id" class="o_kanban_small_column" on_create="quick_create">
+            <kanban default_group_by="stage_id" class="o_kanban_small_column" quick_create="false">
                 <field name="name"/>
                 <field name="title"/>
                 <field name="partner_id"/>
@@ -111,7 +111,7 @@
                 <field name="sla_deadline"/>
                 <field name="sla_reached"/>
                 <templates>
-                    <t t-name="kanban-box">
+                    <t t-name="card">
                         <div class="oe_kanban_global_click">
                             <div class="o_kanban_record_top">
                                 <div class="o_kanban_record_headings">
@@ -151,7 +151,6 @@
             <pivot string="Ticket Analysis">
                 <field name="category_id" type="row"/>
                 <field name="user_id" type="col"/>
-                <field name="close_date" type="measure"/>
             </pivot>
         </field>
     </record>
